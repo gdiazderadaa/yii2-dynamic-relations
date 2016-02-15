@@ -1,6 +1,5 @@
 <?php
 	use synatree\dynamicrelations\SynatreeAsset;
-
 	SynatreeAsset::register($this);
 ?>
 
@@ -19,7 +18,7 @@
 	<li class="list-group-item">
 		<button type="button" class="close remove-dynamic-relation" aria-label="Remove"><span aria-hidden="true">&times;</span></button>		
 		<div class="dynamic-relation-container">
-			<?= $this->renderFile( $viewPath, [ 'model' => $model ]); ?>
+			<?= $this->renderFile( $viewPath, [ 'model' => $model, 'params' => $params ]); ?>
 		</div>
 	</li>	
 <?php

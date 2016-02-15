@@ -193,6 +193,7 @@ use synatree\dynamicrelations\DynamicRelations;
 	'title' => 'Business Hours',
 	'collection' => $model->hours,
 	'viewPath' => '@app/views/business-hours/_inline.php',
+    'params' => ['firstParam' => $firstParam , 'anotherParam' => $anotherParam],
 
 	// this next line is only needed if there is a chance that the collection above will be empty.  This gives the script a prototype to work with.
 	'collectionType' => new \app\models\BusinessHours,

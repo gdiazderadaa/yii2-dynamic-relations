@@ -13,6 +13,7 @@ class DynamicRelations extends Widget
 	public $collection;
 	public $collectionType;
 	public $viewPath;
+    public $params;
 
 	public function init(){
 		parent::init();
@@ -32,13 +33,14 @@ class DynamicRelations extends Widget
 		}
 		$key = "dynamic-relations-$type";
 		$hash = crc32($key);
-		Yii::$app->session->set('dynamic-relations-'.$hash, [ 'path'=>$this->viewPath, 'cls'=>$type ]);
+		Yii::$app->session->set('dynamic-relations-'.$hash, [ 'path'=>$this->viewPath, 'cls'=>$type , 'params' => $this->params]);
 
 		return $this->render('template', [
 			'title' => $this->title,
 			'collection' => $this->collection,
 			'viewPath' => $this->viewPath,
 			'ajaxAddRoute' => Url::toRoute(['dynamicrelations/load/template', 'hash'=>$hash]),
+            'params' => $this->params,
 		]);
 	}
 
@@ -55,10 +57,11 @@ class DynamicRelations extends Widget
 
 	public static function relate($model, $attr, $request, $name, $clsname)
 	{
-		if($request[$name])
+		if(array_key_exists($name,$request))
 		{
-			if($new = $request[$name]['new'])
+			if(array_key_exists('new',$request[$name]))
 			{
+                $new = $request[$name]['new'];
 				foreach( $new as $useless=>$newattrs)
 				{
 					$newmodel = new $clsname;

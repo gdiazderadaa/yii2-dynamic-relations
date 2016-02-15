@@ -13,6 +13,7 @@ class LoadController extends Controller
 		{
 		   echo $this->render( $args['path'], [
 			'model' => new $args['cls'],
+            'params' => $args['params'],
 		   ]);	
 		}
 
