@@ -31,11 +31,11 @@ jQuery(document).ready(function () {
 	jQuery('.add-dynamic-relation').on('click', function(event){
 		event.preventDefault();
 		var me = this;
-		view = jQuery(me).closest('[data-related-view]').attr('data-related-view') + "&t=" + ( new Date().getTime() );
+		view = jQuery(me).next('[data-related-view]').attr('data-related-view') + "&t=" + ( new Date().getTime() );
 		jQuery.get(view, function(result){
 			$result = jQuery(result);
-			li = jQuery(me).closest('li').clone().empty(); ul = jQuery(me).closest('ul');
-			ul.append( li );
+			jQuery(me).next('ul.list-group').append('<li class="list-group-item"></li>');
+            li = jQuery(me).next('ul.list-group').children().last();
 			li.append( $result.filter("#root") );
 			$result.filter('script').each(function(k,scriptNode){
 				if(!scriptNode.src || !scriptLoaded( scriptNode.src ) )
