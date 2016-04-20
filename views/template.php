@@ -36,7 +36,7 @@
                 <li class="list-group-item">
                     <button type="button" class="close remove-dynamic-relation" aria-label="Remove"><span aria-hidden="true">&times;</span></button>		
                     <div class="dynamic-relation-container">
-                        <?= $this->renderFile( $viewPath, [ 'model' => $model, 'params' => $params, ]); ?>
+                        <?= $this->renderFile( $viewPath, [ 'model' => $model, 'params' => $params, 'panel-id' => $panelId ]); ?>
                     </div>
                 </li>	
             <?php
