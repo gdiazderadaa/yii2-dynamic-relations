@@ -34,7 +34,7 @@ class DynamicRelations extends Widget
 		}
 		$key = "dynamic-relations-$type";
 		$hash = crc32($key);
-		Yii::$app->session->set('dynamic-relations-'.$hash, [ 'path'=>$this->viewPath, 'cls'=>$type , 'params' => $this->params , 'panel-id' => $this->panelId]);
+		Yii::$app->session->set('dynamic-relations-'.$hash, [ 'path'=>$this->viewPath, 'cls'=>$type , 'params' => $this->params , 'panelId' => $this->panelId]);
 
 		return $this->render('template', [
 			'title' => $this->title,
@@ -42,7 +42,7 @@ class DynamicRelations extends Widget
 			'viewPath' => $this->viewPath,
 			'ajaxAddRoute' => Url::toRoute(['dynamicrelations/load/template', 'hash'=>$hash]),
             'params' => $this->params,
-			'panel-id' => $this->panelId
+			'panelId' => $this->panelId
 		]);
 	}
 
