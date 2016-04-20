@@ -15,7 +15,7 @@
         ,"template"
     );
 ?>
-<div class="panel">
+<div class="panel" id="<?= $panelId ?>">
     <div class="panel-heading">
         <h2 class="panel-title">
             <a data-toggle="collapse" href="#<?= $title ?>">
