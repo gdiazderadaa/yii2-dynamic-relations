@@ -10,32 +10,37 @@ function scriptLoaded(url) {
 jQuery(document).ready(function () {
 
 	var removeFn = function(sel){
-		jQuery('.remove-dynamic-relation').on('click', function(event){
+		jQuery('.remove-dynamic-relation').on('click', function(event){	
 			event.preventDefault();
 			var me = this;
 			var myLi = jQuery(me).closest('li');
 			removeRoute = jQuery(this).parent().find("[data-dynamic-relation-remove-route]").attr("data-dynamic-relation-remove-route");
-			if(removeRoute)
-			{
-				jQuery.post(removeRoute, function(result){
-					myLi.remove()
-				});
-			}
-			else
-			{
-				myLi.remove();
-			}
-		});
+			
+			// Set a delay to append this selected option to other selects
+			setTimeout(function(){
+				if(removeRoute)
+				{
+					jQuery.post(removeRoute, function(result){
+						myLi.remove()
+					});
+				}
+				else
+				{
+					myLi.remove();
+				}
+			}, 2000);
+		});		
 	};
 
 	jQuery('.add-dynamic-relation').on('click', function(event){
 		event.preventDefault();
 		var me = this;
-		view = jQuery(me).next('[data-related-view]').attr('data-related-view') + "&t=" + ( new Date().getTime() );
+		var ul =jQuery(me).parent().parent().prev().children('[data-related-view]');
+		view = ul.attr('data-related-view') + "&t=" + ( new Date().getTime() );
 		jQuery.get(view, function(result){
 			$result = jQuery(result);
-			jQuery(me).next('ul.list-group').append('<li class="list-group-item"></li>');
-            li = jQuery(me).next('ul.list-group').children().last();
+			ul.append('<li class="form-group"></li>');
+            li = ul.children().last();
 			li.append( $result.filter("#root") );
 			$result.filter('script').each(function(k,scriptNode){
 				if(!scriptNode.src || !scriptLoaded( scriptNode.src ) )
