@@ -6,12 +6,22 @@ function scriptLoaded(url) {
     }
     return false;
 }
+function showLoader(spin){
+	spin.css("height",spin.parent().css("height"));
+	spin.css("width",spin.parent().css("width"));
+	$(spin).removeClass("kv-hide");
+}
+function hideLoader(spin){
+	$(spin).addClass("kv-hide");
+}
 
 jQuery(document).ready(function () {
 
 	var removeFn = function(sel){
 		jQuery('.remove-dynamic-relation').on('click', function(event){	
 			event.preventDefault();
+			var spin = $(this).closest(".box").children(".kv-spin-center").first();
+			showLoader(spin);
 			var me = this;
 			var myLi = jQuery(me).closest('li');
 			removeRoute = jQuery(this).parent().find("[data-dynamic-relation-remove-route]").attr("data-dynamic-relation-remove-route");
@@ -21,11 +31,17 @@ jQuery(document).ready(function () {
 				if(removeRoute)
 				{
 					jQuery.post(removeRoute, function(result){
-						myLi.remove()
+						hideLoader(spin);
+						if (result == "OK"){
+							myLi.remove();
+						}else{
+							alert(result);
+						}						
 					});
 				}
 				else
 				{
+					hideLoader(spin);
 					myLi.remove();
 				}
 			}, 2000);
@@ -34,6 +50,9 @@ jQuery(document).ready(function () {
 
 	jQuery('.add-dynamic-relation').on('click', function(event){
 		event.preventDefault();
+		var spin = $(this).parent().parent().prevAll(".kv-spin-center");
+		showLoader(spin);
+		
 		var me = this;
 		var ul =jQuery(me).parent().parent().prev().children('[data-related-view]');
 		view = ul.attr('data-related-view') + "&t=" + ( new Date().getTime() );
@@ -41,7 +60,10 @@ jQuery(document).ready(function () {
 			$result = jQuery(result);
 			ul.append('<li class="form-group"></li>');
             li = ul.children().last();
-			li.append( $result.filter("#root") );
+            hideLoader(spin);        
+
+			li.append( $result.filter("#root") );			
+					
 			$result.filter('script').each(function(k,scriptNode){
 				if(!scriptNode.src || !scriptLoaded( scriptNode.src ) )
 				{
@@ -50,6 +72,8 @@ jQuery(document).ready(function () {
 			});
 			removeFn( li.find('.remove-dynamic-relation') );
 		});
+		
 	});
 	removeFn('.remove-dynamic-relation');
+	
 });

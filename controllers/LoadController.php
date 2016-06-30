@@ -15,6 +15,7 @@ class LoadController extends Controller
 			'model' => new $args['cls'],
             'params' => $args['params'],
 			'panelId' => $args['panelId'],
+		   	'listId' => $args['listId'],
 			'header' => $args['header'],
 			'boxClass' => $args['boxClass'],
 		   ]);	

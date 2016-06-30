@@ -1,11 +1,14 @@
 <?php
 	use synatree\dynamicrelations\SynatreeAsset;
     use yii\web\View;
+    use kartik\widgets\Spinner;
 
 	SynatreeAsset::register($this);
 
 ?>
-<div class="box box-<?= $boxClass ?>">
+<div class="box box-<?= $boxClass ?>" id="<?= $panelId ?>">
+	<?= Spinner::widget(['preset' => 'large', 'align' => 'center', 'hidden' => true]);?>
+	<div class="clearfix"></div>
     <div class="box-header with-border">
         <<?= $header ?> class="box-title"><?= $title ?></<?= $header ?>>
         <div class="box-tools pull-right">
@@ -16,7 +19,7 @@
     </div>
     <div class="box-body">
 
-        <ul class="list-group" data-related-view="<?= $ajaxAddRoute; ?>">
+        <ul class="list-group" id="<?= $listId ?>"  data-related-view="<?= $ajaxAddRoute; ?>">
             <?php 
                 foreach($collection as $model)
                 {
